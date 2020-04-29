@@ -4,10 +4,12 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("./bg.jpg");
+  background-image: url("./bg.png");
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: top;
+  position: relative;
+  background-color: black !important;
 }
 
 code {
