@@ -6,7 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-image: url("./bg.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100% auto;
   background-position: top;
   position: relative;
   background-color: black !important;

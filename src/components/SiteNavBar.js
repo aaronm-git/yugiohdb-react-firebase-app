@@ -1,5 +1,7 @@
 import React from "react";
-import { Navbar, Form, FormControl, Button, Nav, NavDropdown } from "react-bootstrap";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+
+import { Navbar, Form, FormControl, Button, Nav } from "react-bootstrap";
 
 export default function SiteNavBar() {
   return (
@@ -8,15 +10,16 @@ export default function SiteNavBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
-          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-          </NavDropdown>
+          <li className="nav-item">
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/card" className="nav-link">
+              Card
+            </Link>
+          </li>
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

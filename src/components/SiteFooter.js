@@ -11,7 +11,7 @@ export default function SiteFooter() {
         </div>
         <div className="col-6 col-md">
           <h5 className="text-secondary">Features</h5>
-          <ul className="list-unstyled text-small">
+          {/* <ul className="list-unstyled text-small">
             <li>
               <a className="text-light" href="#">
                 Cool stuff
@@ -43,10 +43,11 @@ export default function SiteFooter() {
               </a>
             </li>
           </ul>
+        */}
         </div>
         <div className="col-6 col-md">
           <h5 className="text-secondary">Resources</h5>
-          <ul className="list-unstyled text-small">
+          {/* <ul className="list-unstyled text-small">
             <li>
               <a className="text-light" href="#">
                 Resource
@@ -68,10 +69,11 @@ export default function SiteFooter() {
               </a>
             </li>
           </ul>
+         */}
         </div>
         <div className="col-6 col-md">
           <h5 className="text-secondary">About</h5>
-          <ul className="list-unstyled text-small">
+          {/* <ul className="list-unstyled text-small">
             <li>
               <a className="text-light" href="#">
                 Team
@@ -93,6 +95,7 @@ export default function SiteFooter() {
               </a>
             </li>
           </ul>
+        */}
         </div>
       </div>
     </Navbar>
