@@ -10,7 +10,10 @@ export default function SiteNavBar() {
   console.log(searchTerm);
   return (
     <Navbar bg="light" expand="lg" className="rounded shadow-lg bg-dark" variant="dark">
-      <Navbar.Brand href="#home">{process.env.REACT_APP_SITE_TITLE}</Navbar.Brand>
+      <Link to="/" className="navbar-brand">
+        {process.env.REACT_APP_SITE_TITLE}
+      </Link>
+
       <Form inline className="position-relative">
         <FormControl type="text" className="mr-sm-2" placeholder="Search" onChange={updateSearchTerm} />
         <Link to={`/search/?q=${searchTerm}`} className="btn btn-outline-warning">
