@@ -23,7 +23,7 @@ export default function SiteNavBar() {
           Search
         </Link>
       </Form>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <li className="nav-item">
@@ -37,7 +37,7 @@ export default function SiteNavBar() {
             </Link>
           </li>
         </Nav>
-      </Navbar.Collapse>
+      </Navbar.Collapse> */}
     </Navbar>
   );
 }
