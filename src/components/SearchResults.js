@@ -25,8 +25,8 @@ export default function SearchResults({ location }) {
     if (Object.keys(cards).length) {
       renderThis = (
         <>
-          <h1>Monster Cards</h1>
-          <Table striped bordered hover>
+          <h5>Monster Cards</h5>
+          <Table striped bordered hover size="sm">
             <thead>
               <tr>
                 <th>#</th>
@@ -45,7 +45,12 @@ export default function SearchResults({ location }) {
                 <tr key={key}>
                   <td>{i + 1}</td>
                   <td>
-                    <Image src={cards[key].card_images[0].image_url_small} thumbnail />
+                    {/* <Image src={cards[key].card_images[0].image_url_small} thumbnail /> */}
+                    <Image
+                      src="https://cdn11.bigcommerce.com/s-0kvv9/images/stencil/1280x1280/products/228856/317481/dpbcen009__44302.1519956921.jpg?c=2&imbypass=on"
+                      thumbnail
+                      style={{ maxWidth: "3.5rem" }}
+                    />
                   </td>
                   <td>
                     <Link to={`/card/${key}`}>{cards[key].name}</Link>
@@ -61,11 +66,12 @@ export default function SearchResults({ location }) {
             </tbody>
           </Table>
 
-          <h1>Spell/Trap Cards</h1>
-          <Table striped bordered hover>
+          <h5>Spell/Trap Cards</h5>
+          <Table striped bordered hover size="sm">
             <thead>
               <tr>
                 <th>#</th>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Race</th>
                 <th>Type</th>
@@ -75,6 +81,15 @@ export default function SearchResults({ location }) {
               {spellTrapCards.map((key, i) => (
                 <tr key={key}>
                   <td>{i + 1}</td>
+                  <td>
+                    {/* <Image src={cards[key].card_images[0].image_url_small} thumbnail /> */}
+                    <Image
+                      src="https://usercontent1.hubstatic.com/14211330.png"
+                      style={{ maxWidth: "3.5rem" }}
+                      thumbnail
+                    />
+                  </td>
+
                   <td>
                     <Link to={`/card/${key}`}>{cards[key].name}</Link>
                   </td>
@@ -92,8 +107,8 @@ export default function SearchResults({ location }) {
           animation="border"
           role="status"
           variant="warning"
-          className="position-relative"
-          style={{ top: "50%", left: "50%" }}
+          // className="position-relative"
+          // style={{ top: "50%", left: "50%" }}
         >
           <span className="sr-only">Loading...</span>
         </Spinner>
@@ -103,7 +118,8 @@ export default function SearchResults({ location }) {
   };
   return (
     <Row className="justify-content-md-center">
-      <Col className="text-center py-3" id="searchResultContainer">
+      <Col className="text-center" id="searchResultContainer">
+        <h1 className="text-center">Search</h1>
         <OutputResults cards={results} />
       </Col>
     </Row>
