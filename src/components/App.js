@@ -21,10 +21,7 @@ function App() {
         <Card className="shadow-lg">
           <Card.Body>
             <Switch>
-              <Route path="/search">
-                <h1>Search Results</h1>
-                <SearchResults />
-              </Route>
+              <Route path="/search" component={SearchResults} />
               <Route path="/card">
                 <h1>Card Page</h1>
                 <CardPage card={card} />
