@@ -11,7 +11,7 @@ import SiteFooter from "./SiteFooter";
 function App() {
   const [card, setCard] = React.useState({});
   return (
-    <Router>
+    <Router basename={window.location.pathname.split("/")[1]}>
       <Container className="mb-3" style={{ minHeight: "calc(100vh - 83px)" }}>
         <Row>
           <Col className="py-3">
