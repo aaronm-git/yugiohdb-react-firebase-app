@@ -12,13 +12,11 @@ export default function SiteNavBar() {
     e.preventDefault();
     history.push(`/search?q=${searchTerm}`);
   };
-  console.log(searchTerm);
   return (
     <Navbar bg="light" expand="lg" className="rounded shadow-lg bg-dark" variant="dark">
       <Link to="/" className="navbar-brand">
         {process.env.REACT_APP_SITE_TITLE}
       </Link>
-
       <Form inline className="position-relative" onSubmit={searchTermSubmit}>
         <FormControl type="text" className="mr-sm-2" placeholder="Search" onChange={updateSearchTerm} />
         <Link to={`/search/?q=${searchTerm}`} className="btn btn-outline-warning">
