@@ -1,12 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-
-import { Navbar, Form, FormControl, Button, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Navbar, Form, FormControl, Nav } from "react-bootstrap";
 
 export default function SiteNavBar() {
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const updateSearchTerm = (e) => {
+    setSearchTerm(e.target.value);
+  };
+  console.log(searchTerm);
   return (
-    <Navbar bg="light" expand="lg" className="rounded shadow-lg">
+    <Navbar bg="light" expand="lg" className="rounded shadow-lg bg-dark" variant="dark">
       <Navbar.Brand href="#home">{process.env.REACT_APP_SITE_TITLE}</Navbar.Brand>
+      <Form inline className="position-relative">
+        <FormControl type="text" className="mr-sm-2" placeholder="Search" onChange={updateSearchTerm} />
+        <Link to={`/search/?q=${searchTerm}`} className="btn btn-outline-warning">
+          Search
+        </Link>
+      </Form>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -21,10 +31,6 @@ export default function SiteNavBar() {
             </Link>
           </li>
         </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form>
       </Navbar.Collapse>
     </Navbar>
   );

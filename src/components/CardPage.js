@@ -1,9 +1,8 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-
 import CardDetails from "./CardDetails";
 
-export default function SearchResult({ card }) {
+export default function CardPage({ card }) {
   return (
     <Row className="justify-content-md-center">
       <Col className="text-center py-3">
