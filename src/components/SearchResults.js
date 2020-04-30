@@ -1,10 +1,11 @@
 import React from "react";
 import firebase from "../firebase";
-import { Link } from "react-router-dom";
-import { Row, Col, Table, Spinner, Image } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import { Row, Col, Table, Spinner, Image, Button } from "react-bootstrap";
 
-export default function SearchResults({ location }) {
+export default function SearchResults({ location, setCard }) {
   const [results, setResults] = React.useState({});
+  const history = useHistory();
   const query = new URLSearchParams(location.search);
   const searchTerm = query.get("q");
   const qb = firebase.firestore();
@@ -17,16 +18,21 @@ export default function SearchResults({ location }) {
     };
     getSearchResults();
   }, [qb, searchTerm]);
-
+  const setSelectedCard = (selectedCard) => {
+    console.log(selectedCard, setCard);
+    setCard(selectedCard);
+    history.push(`/card`);
+  };
   const OutputResults = ({ cards }) => {
     let renderThis;
-    const monsterCards = Object.keys(cards).filter((key) => cards[key].type.includes("Monster"));
-    const spellTrapCards = Object.keys(cards).filter((key) => !cards[key].type.includes("Monster"));
     if (Object.keys(cards).length) {
+      const monsterCards = Object.keys(cards).filter((key) => cards[key].type.includes("Monster"));
+      const spellTrapCards = Object.keys(cards).filter((key) => !cards[key].type.includes("Monster"));
       renderThis = (
         <>
           <h5>Monster Cards</h5>
-          <Table striped bordered hover size="sm">
+
+          <Table striped bordered hover size="sm" responsive>
             <thead>
               <tr>
                 <th>#</th>
@@ -53,7 +59,9 @@ export default function SearchResults({ location }) {
                     />
                   </td>
                   <td>
-                    <Link to={`/card/${key}`}>{cards[key].name}</Link>
+                    <Button variant="link" size="sm" onClick={() => setSelectedCard(cards[key])}>
+                      {cards[key].name}
+                    </Button>
                   </td>
                   <td>{cards[key].atk}</td>
                   <td>{cards[key].def}</td>
@@ -67,7 +75,7 @@ export default function SearchResults({ location }) {
           </Table>
 
           <h5>Spell/Trap Cards</h5>
-          <Table striped bordered hover size="sm">
+          <Table striped bordered hover size="sm" responsive>
             <thead>
               <tr>
                 <th>#</th>
@@ -116,6 +124,7 @@ export default function SearchResults({ location }) {
     }
     return renderThis;
   };
+
   return (
     <Row className="justify-content-md-center">
       <Col className="text-center" id="searchResultContainer">
