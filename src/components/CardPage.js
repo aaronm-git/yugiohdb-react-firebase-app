@@ -16,7 +16,6 @@ export default function CardPage(props) {
     const getMissingCard = async () => {
       const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
       if (cardRef.size) {
-        console.log("It exists!");
         setCard(cardRef.docs[0].data());
       } else {
         window.location.replace(`/${window.location.pathname.split("/")[1]}/404`);
