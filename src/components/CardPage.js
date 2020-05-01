@@ -1,23 +1,37 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import firebase from "../firebase";
 import { Row, Col } from "react-bootstrap";
-import CardDetails from "./CardDetails";
 
-export default function CardPage({ card }) {
+import CardDetails from "./CardDetails";
+import Loading from "./Loading";
+import Image from "./Image";
+
+export default function CardPage(props) {
+  let card = props.card;
+  const { setCard } = props;
+  let { id } = useParams();
+  let db = firebase.firestore();
+  React.useEffect(() => {
+    const getMissingCard = async () => {
+      const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
+      if (cardRef.size) {
+        console.log("It exists!");
+        setCard(cardRef.docs[0].data());
+      } else {
+        window.location.replace(`/${window.location.pathname.split("/")[1]}/404`);
+      }
+    };
+    getMissingCard();
+  }, [db, id, setCard]);
   return (
-    <Row className="justify-content-md-center">
-      <Col className="text-center py-3">
-        <img
-          src="https://images-na.ssl-images-amazon.com/images/I/616KVG%2B6InL._AC_.jpg"
-          alt={card.name}
-          className=""
-          style={{ maxWidth: "100%", maxHeight: "400px" }}
-        />
-      </Col>
+    <Row>
+      <Col>{card.name ? <Image card={card.card_images[0].id} /> : <Loading />}</Col>
       <Col md="8" lg="5">
-        <CardDetails card={card} />
+        {Object.keys(card).length ? <CardDetails card={card} /> : <Loading />}
       </Col>
       <Col md="12" lg="3" className="text-center py-3">
-        Card Stats
+        <h5>Card Stats</h5>
       </Col>
     </Row>
   );
