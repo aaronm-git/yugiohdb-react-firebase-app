@@ -1,5 +1,5 @@
 import React from "react";
-import { ListGroup, Badge, Spinner } from "react-bootstrap";
+import { ListGroup, Badge } from "react-bootstrap";
 export default function CardDetails({ card }) {
   const getType = (type) => {
     let color = "";
@@ -37,50 +37,36 @@ export default function CardDetails({ card }) {
       );
       cardRace = <Badge variant="secondary">{card.race}</Badge>;
     }
-    let listGroup = (
-      <Spinner
-        animation="border"
-        role="status"
-        variant="warning"
-        className="position-absolute"
-        style={{ top: "50%", left: "50%" }}
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    );
-    if (card.name) {
-      let cardDescription = card.desc.replace("●", "\n●");
-      listGroup = (
-        <ListGroup variant="flush">
-          <ListGroup.Item className="font-weight-bold">{card.name}</ListGroup.Item>
-          <ListGroup.Item>
-            <div className="d-flex justify-content-between">
-              <div>
-                {getType(card.type)} / ID: {card.id}
-              </div>
-              <div>
-                <Badge variant="secondary">{card.attribute}</Badge> {cardRace}
-              </div>
+    let cardDescription = card.desc.replace("●", "\n●");
+    return (
+      <ListGroup variant="flush">
+        <ListGroup.Item className="font-weight-bold">{card.name}</ListGroup.Item>
+        <ListGroup.Item>
+          <div className="d-flex justify-content-between">
+            <div>
+              {getType(card.type)} / ID: {card.id}
             </div>
-          </ListGroup.Item>
-          {cardATK}
-          <ListGroup.Item style={{ whiteSpace: "pre-line" }}>{cardDescription}</ListGroup.Item>
-          <ListGroup.Item>
-            <p>Archetype: {card.archetype}</p>
-          </ListGroup.Item>
-          {/* <ListGroup.Item>
+            <div>
+              <Badge variant="secondary">{card.attribute}</Badge> {cardRace}
+            </div>
+          </div>
+        </ListGroup.Item>
+        {cardATK}
+        <ListGroup.Item style={{ whiteSpace: "pre-line" }}>{cardDescription}</ListGroup.Item>
+        <ListGroup.Item>
+          <p>Archetype: {card.archetype}</p>
+        </ListGroup.Item>
+        {/* <ListGroup.Item>
             <p>TCG Initial Release: {card.archetype}</p>
             <p>OCG Initial Release: {card.archetype}</p>
           </ListGroup.Item> */}
-        </ListGroup>
-      );
-    }
-    return listGroup;
+      </ListGroup>
+    );
   };
   return (
-    <>
+    <div className="position-relative">
       <h2 className="text-center h4">Card Details</h2>
-      <GetListGroup card={card} className="position-relative" />
-    </>
+      {Object.keys(card).length ? <GetListGroup card={card} /> : <h5>Invalid Id</h5>}
+    </div>
   );
 }
