@@ -1,12 +1,1 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import url("https://db.onlinewebfonts.com/c/5991b969840395ce81e1a54fe6dbecd8?family=MatrixIIOT-Bold");
-.navbar-brand,
-.btn,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: MatrixIIOT-Bold;
-}
