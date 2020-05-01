@@ -7,6 +7,7 @@ import SearchResults from "./SearchResults";
 import CardPage from "./CardPage";
 import SiteNavBar from "./SiteNavBar";
 import SiteFooter from "./SiteFooter";
+import NotFound from "./NotFound";
 
 function App() {
   const [card, setCard] = React.useState({});
@@ -22,7 +23,8 @@ function App() {
           <Card.Body>
             <Switch>
               <Route path="/search" render={(props) => <SearchResults {...props} setCard={setCard} />} />
-              <Route path="/card" render={(props) => <CardPage {...props} card={card} />} />
+              <Route path="/card/:id" render={(props) => <CardPage {...props} setCard={setCard} card={card} />} />
+              <Route path="/404" component={NotFound} />
               <Route path="/">
                 <h1>Home</h1>
               </Route>
