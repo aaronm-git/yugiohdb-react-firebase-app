@@ -12,7 +12,7 @@ import NotFound from "./NotFound";
 function App() {
   const [card, setCard] = React.useState({});
   return (
-    <Router basename={window.location.pathname.split("/")[1]}>
+    <Router>
       <Container className="mb-3" style={{ minHeight: "calc(100vh - 83px)" }}>
         <Row>
           <Col className="py-3">
