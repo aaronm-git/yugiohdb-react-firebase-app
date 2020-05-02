@@ -22,8 +22,14 @@ function App() {
         <Card className="shadow-lg">
           <Card.Body>
             <Switch>
-              <Route path="/search" render={(props) => <SearchResults {...props} setCard={setCard} />} />
-              <Route path="/card/:id" render={(props) => <CardPage {...props} setCard={setCard} card={card} />} />
+              <Route
+                path="/search"
+                render={(props) => <SearchResults {...props} selectThisCard={(card) => setCard(card)} />}
+              />
+              <Route
+                path="/card/:id"
+                render={(props) => <CardPage {...props} selectThisCard={(card) => setCard(card)} card={card} />}
+              />
               <Route path="/404" component={NotFound} />
               <Route path="/">
                 <h1>Home</h1>

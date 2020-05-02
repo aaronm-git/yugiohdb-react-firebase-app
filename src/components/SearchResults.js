@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Row, Col, Table, Image, Button } from "react-bootstrap";
 import Loading from "./Loading";
 
-export default function SearchResults({ location, setCard }) {
+export default function SearchResults({ location, selectThisCard }) {
   const [results, setResults] = React.useState({});
   const history = useHistory();
   const query = new URLSearchParams(location.search);
@@ -20,7 +20,7 @@ export default function SearchResults({ location, setCard }) {
     getSearchResults();
   }, [qb, searchTerm]);
   const setSelectedCard = (selectedCard) => {
-    setCard(selectedCard);
+    selectThisCard(selectedCard);
     history.push(`/card/${selectedCard.id}`);
   };
   const OutputResults = ({ cards }) => {
