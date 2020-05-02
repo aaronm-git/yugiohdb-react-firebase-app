@@ -40,7 +40,6 @@ export default function CardDetails({ card }) {
     let cardDescription = card.desc.replace("●", "\n●");
     return (
       <ListGroup variant="flush">
-        <ListGroup.Item className="font-weight-bold">{card.name}</ListGroup.Item>
         <ListGroup.Item>
           <div className="d-flex justify-content-between">
             <div>
@@ -65,7 +64,7 @@ export default function CardDetails({ card }) {
   };
   return (
     <div className="position-relative">
-      <h2 className="text-center h4">Card Details</h2>
+      <h2 className="text-center h4">{card.name}</h2>
       {Object.keys(card).length ? <GetListGroup card={card} /> : <h5>Invalid Id</h5>}
     </div>
   );
