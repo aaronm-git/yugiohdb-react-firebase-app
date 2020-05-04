@@ -1,6 +1,6 @@
 import React from "react";
 import firebase from "../firebase";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Row, Col, Table, Image, Button } from "react-bootstrap";
 import Loading from "./Loading";
 

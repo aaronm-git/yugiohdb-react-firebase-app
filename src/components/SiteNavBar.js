@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Navbar, Form, FormControl, Nav } from "react-bootstrap";
+import { Navbar, Form, FormControl } from "react-bootstrap";
 
 export default function SiteNavBar() {
   const history = useHistory();
