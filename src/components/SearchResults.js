@@ -12,9 +12,14 @@ export default function SearchResults({ location, selectThisCard }) {
   const qb = firebase.firestore();
   React.useEffect(() => {
     const getSearchResults = async () => {
-      const searchResultRef = await qb.collection("cards").where("name", ">=", searchTerm).limit(10).get();
+      const querySnapshot = await qb
+        .collection("cards")
+        .where("name", ">=", searchTerm)
+        .orderBy("name")
+        .limit(10)
+        .get();
       const cache = {};
-      searchResultRef.forEach((result) => (cache[result.id] = result.data()));
+      if (querySnapshot.size) querySnapshot.forEach((doc) => (cache[doc.id] = doc.data()));
       setResults(cache);
     };
     getSearchResults();
