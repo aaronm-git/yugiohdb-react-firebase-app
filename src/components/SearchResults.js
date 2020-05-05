@@ -28,6 +28,8 @@ export default function SearchResults({ location, selectThisCard }) {
     selectThisCard(selectedCard);
     history.push(`/card/${selectedCard.id}`);
   };
+  const addDefaultSrc = (e) =>
+    (e.target.src = "https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/default.jpg");
   const OutputResults = ({ cards }) => {
     const monsterCards = Object.keys(cards).filter((key) => cards[key].type.includes("Monster"));
     const spellTrapCards = Object.keys(cards).filter((key) => !cards[key].type.includes("Monster"));
@@ -53,11 +55,10 @@ export default function SearchResults({ location, selectThisCard }) {
               <tr key={key}>
                 <td>{i + 1}</td>
                 <td>
-                  {/* <Image src={cards[key].card_images[0].image_url_small} thumbnail /> */}
                   <Image
-                    src="https://cdn11.bigcommerce.com/s-0kvv9/images/stencil/1280x1280/products/228856/317481/dpbcen009__44302.1519956921.jpg?c=2&imbypass=on"
+                    src={`https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/${cards[key].id}.jpg`}
+                    onError={addDefaultSrc}
                     thumbnail
-                    style={{ maxWidth: "3.5rem" }}
                   />
                 </td>
                 <td>
@@ -91,12 +92,16 @@ export default function SearchResults({ location, selectThisCard }) {
               <tr key={key}>
                 <td>{i + 1}</td>
                 <td>
-                  {/* <Image src={cards[key].card_images[0].image_url_small} thumbnail /> */}
-                  <Image
-                    src="https://usercontent1.hubstatic.com/14211330.png"
-                    style={{ maxWidth: "3.5rem" }}
-                    thumbnail
-                  />
+                  <object
+                    data="https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/default.jpg"
+                    onError={addDefaultSrc}
+                    type="image/png"
+                  >
+                    <Image
+                      src={`https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/${cards[key].id}.jpg`}
+                      thumbnail
+                    />
+                  </object>
                 </td>
 
                 <td>
