@@ -53,6 +53,8 @@ export default function CardDetails({ card }) {
         {cardATK}
         <ListGroup.Item style={{ whiteSpace: "pre-line" }}>{cardDescription}</ListGroup.Item>
         <ListGroup.Item>
+          <p>Type: {card.type}</p>
+          <p>Race: {card.race}</p>
           <p>Archetype: {card.archetype}</p>
         </ListGroup.Item>
         {/* <ListGroup.Item>
