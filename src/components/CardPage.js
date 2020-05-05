@@ -8,19 +8,21 @@ import Loading from "./Loading";
 import CardImage from "./CardImage";
 
 export default function CardPage({ card, selectThisCard }) {
+  const [gotCardDetails, setGotCardDetails] = React.useState(false);
   let { id } = useParams();
   let db = firebase.firestore();
-  React.useEffect(() => {
-    const getMissingCard = async () => {
-      const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
-      if (cardRef.size) {
-        selectThisCard(cardRef.docs[0].data());
-      } else {
-        window.location.replace(`/${window.location.pathname.split("/")[1]}/404`);
-      }
-    };
-    getMissingCard();
-  }, [db, id, selectThisCard]);
+  const getMissingCard = async () => {
+    console.log("querying DB");
+    const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
+    if (cardRef.size) {
+      selectThisCard(cardRef.docs[0].data());
+    } else {
+      window.location.replace(`/${window.location.pathname.split("/")[1]}/404`);
+    }
+    setGotCardDetails(true);
+  };
+  if (!gotCardDetails) getMissingCard();
+
   return (
     <Row>
       <Col className="text-center mb-2 mb-md-0">
