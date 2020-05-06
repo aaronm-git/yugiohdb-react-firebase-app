@@ -12,7 +12,6 @@ export default function CardPage({ card, selectThisCard }) {
   let { id } = useParams();
   let db = firebase.firestore();
   const getMissingCard = async () => {
-    console.log("querying DB");
     const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
     if (cardRef.size) {
       selectThisCard(cardRef.docs[0].data());

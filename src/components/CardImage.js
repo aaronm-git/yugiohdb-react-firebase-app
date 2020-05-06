@@ -17,10 +17,8 @@ export default function CardImage({ cardId }) {
       async function findImage() {
         try {
           const result = await verifyImgExists({ cardId });
-          console.log(result);
           if (result.data.Data.exists && result.data.Status !== 500) {
             const url = await firebase.storage().ref(`cards/${cardId}.jpg`).getDownloadURL();
-            console.log(url);
             setImgURL(url);
           }
         } catch (error) {
