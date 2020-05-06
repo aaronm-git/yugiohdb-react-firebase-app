@@ -31,14 +31,18 @@ export default function SearchResults({ location, selectThisCard }) {
   }, [qb, searchTerm]);
 
   const Thumbnail = (cardId) => (
-    <Image
-      src={`https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/${cardId}.jpg`}
-      onError={(e) =>
-        (e.target.src = "https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/default.jpg")
-      }
-      thumbnail
-      style={{ width: "4rem" }}
-    />
+    <>
+      <Image
+        src={`https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/${cardId}.jpg`}
+        onLoad={(e) => e.target.nextElementSibling.classList.add("d-none")}
+        onError={(e) =>
+          (e.target.src = "https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/default.jpg")
+        }
+        thumbnail
+        style={{ width: "4rem" }}
+      />
+      <Loading />
+    </>
   );
 
   const setSelectedCard = (selectedCard) => {
