@@ -34,7 +34,11 @@ export default function SearchResults({ location, selectThisCard }) {
     <>
       <Image
         src={`https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/${cardId}.jpg`}
-        onLoad={(e) => e.target.nextElementSibling.classList.add("d-none")}
+        className="d-none"
+        onLoad={(e) => {
+          e.target.classList.remove("d-none");
+          e.target.nextElementSibling.classList.add("d-none");
+        }}
         onError={(e) =>
           (e.target.src = "https://storage.cloud.google.com/yugiohdb-app.appspot.com/card_thumbnails/default.jpg")
         }
