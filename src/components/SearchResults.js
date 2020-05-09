@@ -113,7 +113,7 @@ export default function SearchResults({ location, selectThisCard }) {
                 <td>
                   <Button variant="link" size="sm" onClick={() => setSelectedCard(cards[key])}>
                     {cards[key].name}
-                  </Button>{" "}
+                  </Button>
                 </td>
                 <td>{cards[key].race}</td>
                 <td>{cards[key].type}</td>
