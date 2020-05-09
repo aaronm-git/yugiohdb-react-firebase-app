@@ -15,7 +15,11 @@ import { Row, Col, Image, Button } from "react-bootstrap";
 
 const searchClient = algoliasearch("A5JPX9U9RD", "bffd80bc0030e6e51457ec77f6ff353c");
 
-export default function AlgoliaSearch() {
+export default function AlgoliaSearch({ location }) {
+  const getQuery = () => {
+    const query = new URLSearchParams(location.search);
+    return query.get("q");
+  };
   const Hit = ({ hit }) => {
     return (
       <div>
@@ -38,7 +42,7 @@ export default function AlgoliaSearch() {
               <Configure hitsPerPage={8} />
             </Col>
             <Col md="9">
-              <SearchBox />
+              <SearchBox defaultRefinement={getQuery()} />
               <Hits hitComponent={Hit} />
               {/* <Hits /> */}
               <Pagination />
