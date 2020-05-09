@@ -7,10 +7,21 @@ import SearchResults from "./SearchResults";
 import CardPage from "./CardPage";
 import SiteNavBar from "./SiteNavBar";
 import SiteFooter from "./SiteFooter";
+import Home from "./Home";
 import NotFound from "./NotFound";
 
 function App() {
   const [card, setCard] = React.useState({});
+  const [recentlyViewed, setRecentlyViewed] = React.useState(JSON.parse(localStorage.getItem("recentlyViewed")) || []);
+  const selectThisCard = (selectedCard) => {
+    console.log("Select card...", selectedCard);
+    setCard(selectedCard);
+    let newRecentlyViewedList = [selectedCard, ...recentlyViewed].slice(0, 5);
+    setRecentlyViewed(newRecentlyViewedList);
+
+    localStorage.setItem("selectedCard", JSON.stringify(selectedCard));
+    localStorage.setItem("recentlyViewed", JSON.stringify(newRecentlyViewedList));
+  };
   return (
     <Router>
       <Container className="mb-3" style={{ minHeight: "calc(100vh - 83px)" }}>
@@ -24,15 +35,19 @@ function App() {
             <Switch>
               <Route
                 path="/search"
-                render={(props) => <SearchResults {...props} selectThisCard={(card) => setCard(card)} />}
+                render={(props) => (
+                  <SearchResults {...props} selectThisCard={(selectedCard) => selectThisCard(selectedCard)} />
+                )}
               />
               <Route
                 path="/card/:id"
-                render={(props) => <CardPage {...props} selectThisCard={(card) => setCard(card)} card={card} />}
+                render={(props) => (
+                  <CardPage {...props} selectThisCard={(selectedCard) => selectThisCard(selectedCard)} card={card} />
+                )}
               />
               <Route path="/404" component={NotFound} />
               <Route path="/">
-                <h1>Home</h1>
+                <Home recentCards={recentlyViewed} />
               </Route>
             </Switch>
           </Card.Body>
