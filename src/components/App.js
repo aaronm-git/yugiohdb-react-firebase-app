@@ -16,8 +16,14 @@ function App() {
   const selectThisCard = (selectedCard) => {
     console.log("Select card...", selectedCard);
     setCard(selectedCard);
-    let newRecentlyViewedList = [selectedCard, ...recentlyViewed].slice(0, 5);
-    setRecentlyViewed(newRecentlyViewedList);
+    let newRecentlyViewedList = [
+      selectedCard,
+      ...recentlyViewed.filter((item) => {
+        return selectedCard && item ? item.id !== selectedCard.id : false;
+      }),
+    ];
+
+    setRecentlyViewed(newRecentlyViewedList.slice(0, 5));
 
     localStorage.setItem("selectedCard", JSON.stringify(selectedCard));
     localStorage.setItem("recentlyViewed", JSON.stringify(newRecentlyViewedList));
