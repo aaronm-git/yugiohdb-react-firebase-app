@@ -8,19 +8,27 @@ import Loading from "./Loading";
 import CardImage from "./CardImage";
 
 export default function CardPage({ card, selectThisCard }) {
-  const [gotCardDetails, setGotCardDetails] = React.useState(false);
-  let { id } = useParams();
-  let db = firebase.firestore();
-  const getMissingCard = async () => {
-    const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
-    if (cardRef.size) {
-      selectThisCard(cardRef.docs[0].data());
-    } else {
-      window.location.replace(`/${window.location.pathname.split("/")[1]}/404`);
+  const [showCard, setShowCard] = React.useState(JSON.parse(localStorage.getItem("selectedCard")) || card);
+  const cardExists = Object.keys(showCard).length ? true : false;
+  console.log(cardExists, showCard);
+
+  const { id } = useParams();
+
+  React.useEffect(() => {
+    if (!cardExists) {
+      const db = firebase.firestore();
+      const getMissingCard = async () => {
+        console.log("Gettign for missing card...");
+        const cardRef = await db.collection("cards").where("id", "==", parseInt(id, 10)).get();
+        if (cardRef.size) {
+          selectThisCard(cardRef.docs[0].data());
+        } else {
+          window.location.replace(`/${window.location.pathname.split("/")[1]}/404`);
+        }
+      };
+      getMissingCard();
     }
-    setGotCardDetails(true);
-  };
-  if (!gotCardDetails) getMissingCard();
+  }, [cardExists, id, selectThisCard]);
 
   return (
     <Row>
