@@ -15,6 +15,7 @@ function App() {
   const [recentlyViewed, setRecentlyViewed] = React.useState(JSON.parse(localStorage.getItem("recentlyViewed")) || []);
   const selectThisCard = (selectedCard) => {
     console.log("Select card...", selectedCard);
+    localStorage.setItem("selectedCard", JSON.stringify(selectedCard));
     setCard(selectedCard);
     let newRecentlyViewedList = [
       selectedCard,
@@ -22,10 +23,7 @@ function App() {
         return selectedCard && item ? item.id !== selectedCard.id : false;
       }),
     ];
-
     setRecentlyViewed(newRecentlyViewedList.slice(0, 5));
-
-    localStorage.setItem("selectedCard", JSON.stringify(selectedCard));
     localStorage.setItem("recentlyViewed", JSON.stringify(newRecentlyViewedList));
   };
   return (
@@ -53,7 +51,7 @@ function App() {
               />
               <Route path="/404" component={NotFound} />
               <Route path="/">
-                <Home recentCards={recentlyViewed} />
+                <Home recentCards={recentlyViewed} selectThisCard={(selectedCard) => selectThisCard(selectedCard)} />
               </Route>
             </Switch>
           </Card.Body>

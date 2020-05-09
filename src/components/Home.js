@@ -1,20 +1,22 @@
 import React from "react";
-import { CardDeck, Card, Button } from "react-bootstrap";
+import { CardDeck, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-export default function Home({ recentCards }) {
+export default function Home({ recentCards, selectThisCard }) {
   const cardItem = (card) => (
-    <Card style={{ width: "18rem" }} key={"recent-" + card.id}>
+    <Card key={"recent-" + card.id}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
         <Card.Title>{card.name}</Card.Title>
         {card.type}
         <hr />
-        <Card.Text>{card.desc}</Card.Text>
-        <Button variant="primary">View Card</Button>
+        {/* <Card.Text style={{ maxHeight: "100px", overflow: "scroll" }}>{card.desc}</Card.Text> */}
+        <Link to={`/card/${card.id}`} className="btn btn-block btn-warning" onClick={() => selectThisCard(card)}>
+          View Card
+        </Link>
       </Card.Body>
     </Card>
   );
-
   return (
     <>
       <h1>Home</h1>
