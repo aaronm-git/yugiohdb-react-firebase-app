@@ -1,5 +1,6 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
+
+import { Navbar, Nav, Image } from "react-bootstrap";
 
 export default function SiteFooter() {
   const Environment = () => {
@@ -7,13 +8,11 @@ export default function SiteFooter() {
     else return null;
   };
   return (
-    <Navbar className="pt-4">
-      <div className="row">
-        <div className="col-12 col-md text-light">
-          <small className="d-block mb-3">© 2020</small>
-          <Environment />
-        </div>
-      </div>
+    <Navbar bg="dark" variant="dark" className="text-white">
+      <Nav className="mr-auto">
+        <small className="d-block mb-3">© 2020</small>
+      </Nav>
+      <Environment />
     </Navbar>
   );
 }

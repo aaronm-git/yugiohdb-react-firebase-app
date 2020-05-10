@@ -3,7 +3,7 @@ import "./App.css";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-import SearchResults from "./SearchResults";
+// import SearchResults from "./SearchResults";
 import AlgoliaSearch from "./AlgoliaSearch";
 import CardPage from "./CardPage";
 import SiteNavBar from "./SiteNavBar";
@@ -59,9 +59,7 @@ function App() {
           </Card.Body>
         </Card>
       </Container>
-      <Container fluid className="bg-dark">
-        <SiteFooter />
-      </Container>
+      <SiteFooter />
     </Router>
   );
 }

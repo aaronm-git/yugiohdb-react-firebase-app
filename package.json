@@ -1,7 +1,7 @@
 {
   "name": "yugiohdb-react-firebase-app",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://aaronm-git.github.io/yugiohdb-react-firebase-app",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -9,11 +9,13 @@
     "@testing-library/user-event": "^7.1.2",
     "algoliasearch": "^4.2.0",
     "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.0.0-alpha3",
     "firebase": "^7.14.2",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
+    "react-bootstrap-icons": "^1.0.1-alpha3",
     "react-dom": "^16.13.1",
     "react-instantsearch-dom": "^6.4.0",
     "react-router-dom": "^5.1.2",
@@ -25,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "gh-pages-clean": "gh-pages-clean"
   },
   "eslintConfig": {
     "extends": "react-app"
