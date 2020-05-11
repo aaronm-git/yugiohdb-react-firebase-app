@@ -93,39 +93,72 @@ export default function AlgoliaSearch({ location }) {
         currentRefinement + 1 <= nbPages ? "Last" : null,
       ],
       range = [...left, currentRefinement, ...right].filter((i) => i !== null);
-    console.log(range);
+
+    const MobilePagination = () => {
+      return (
+        <Pagination size="lg" className="justify-content-center d-lg-none">
+          {currentRefinement - 1 > 0 ? (
+            <Pagination.Item
+              onClick={(event) => {
+                event.preventDefault();
+                refine(currentRefinement - 1);
+              }}
+            >
+              <ChevronLeft />
+            </Pagination.Item>
+          ) : (
+            ""
+          )}
+          <Pagination.Item key={`algoliaPage-${currentRefinement}-mobile`} active>
+            {currentRefinement}
+          </Pagination.Item>
+          {currentRefinement + 1 < nbPages ? (
+            <Pagination.Item
+              onClick={(event) => {
+                event.preventDefault();
+                refine(currentRefinement + 1);
+              }}
+            >
+              <ChevronRight />
+            </Pagination.Item>
+          ) : (
+            ""
+          )}
+        </Pagination>
+      );
+    };
     return (
-      <Pagination size="lg" className="justify-content-center">
-        {range.map((page) => {
-          let jumpTo;
-          let name;
-          switch (page) {
-            case "First":
-              jumpTo = 1;
-              name = <ChevronDoubleLeft />;
-              break;
-            case "Prev":
-              jumpTo = currentRefinement - 1;
-              name = <ChevronLeft />;
-              break;
-            case "Next":
-              jumpTo = currentRefinement + 1;
-              name = <ChevronRight />;
-              break;
-            case "Last":
-              jumpTo = nbPages;
-              name = <ChevronDoubleRight />;
-              break;
-            default:
-              jumpTo = page;
-              name = page;
-              break;
-          }
-          return (
-            <>
+      <>
+        <Pagination size="lg" className="justify-content-center d-none d-lg-flex">
+          {range.map((page) => {
+            let jumpTo;
+            let name;
+            switch (page) {
+              case "First":
+                jumpTo = 1;
+                name = <ChevronDoubleLeft />;
+                break;
+              case "Prev":
+                jumpTo = currentRefinement - 1;
+                name = <ChevronLeft />;
+                break;
+              case "Next":
+                jumpTo = currentRefinement + 1;
+                name = <ChevronRight />;
+                break;
+              case "Last":
+                jumpTo = nbPages;
+                name = <ChevronDoubleRight />;
+                break;
+              default:
+                jumpTo = page;
+                name = page;
+                break;
+            }
+            return (
               <Pagination.Item
+                className={`${page === "..." ? "disabled" : ""}`}
                 active={page === currentRefinement}
-                className={`${page === "..." ? "disabled" : ""} d-none d-lg-block`}
                 key={`algoliaPage-${page}`}
                 onClick={(event) => {
                   event.preventDefault();
@@ -134,10 +167,11 @@ export default function AlgoliaSearch({ location }) {
               >
                 {name}
               </Pagination.Item>
-            </>
-          );
-        })}
-      </Pagination>
+            );
+          })}
+        </Pagination>
+        <MobilePagination />
+      </>
     );
   };
 
