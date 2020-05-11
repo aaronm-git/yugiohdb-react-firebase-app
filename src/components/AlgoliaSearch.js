@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,
-  Pagination,
   ClearRefinements,
   RefinementList,
   Configure,
   PoweredBy,
   connectSearchBox,
   connectHits,
+  connectPagination,
 } from "react-instantsearch-dom";
-import { Row, Col, FormControl, Card, CardColumns } from "react-bootstrap";
+import { Row, Col, FormControl, Card, CardColumns, Pagination } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 
 const searchClient = algoliasearch("A5JPX9U9RD", "bffd80bc0030e6e51457ec77f6ff353c");
@@ -22,7 +22,7 @@ export default function AlgoliaSearch({ location }) {
     return query.get("q");
   };
 
-  const Hits = ({ hits }) => {
+  const AlgoliaHits = ({ hits }) => {
     return (
       <CardColumns>
         {hits.map((hit) => (
@@ -77,8 +77,66 @@ export default function AlgoliaSearch({ location }) {
     );
   };
 
+  const AlgoliaPagination = ({ currentRefinement, nbPages, refine }) => {
+    console.log(currentRefinement);
+
+    const left = [
+        currentRefinement - 3 > 0 ? "..." : null,
+        currentRefinement - 2 > 0 ? currentRefinement - 2 : null,
+        currentRefinement - 1 > 0 ? currentRefinement - 1 : null,
+      ],
+      right = [
+        currentRefinement + 1 <= nbPages ? currentRefinement + 1 : null,
+        currentRefinement + 2 <= nbPages ? currentRefinement + 2 : null,
+        currentRefinement + 3 <= nbPages ? "..." : null,
+      ],
+      range = ["First", "Prev", ...left, currentRefinement, ...right, "Next", "Last"].filter((i) => i !== null);
+    console.log(range);
+    return (
+      <Pagination size="lg" className="justify-content-center">
+        {/* {range.map((el, i) => (
+          <Pagination.Item active={currentRefinement === el}>{el}</Pagination.Item>
+        ))} */}
+        {range.map((page) => {
+          let jumpTo;
+          switch (page) {
+            case "First":
+              jumpTo = 1;
+              break;
+            case "Prev":
+              jumpTo = currentRefinement - 1;
+              break;
+            case "Next":
+              jumpTo = currentRefinement + 1;
+              break;
+            case "Last":
+              jumpTo = nbPages;
+              break;
+            default:
+              jumpTo = 1;
+              break;
+          }
+          return (
+            <Pagination.Item
+              active={page === currentRefinement}
+              className={page === "..." ? "disabled" : ""}
+              key={`algoliaPage-${page}`}
+              onClick={(event) => {
+                event.preventDefault();
+                refine(jumpTo);
+              }}
+            >
+              {page}
+            </Pagination.Item>
+          );
+        })}
+      </Pagination>
+    );
+  };
+
   const CustomSearchBox = connectSearchBox(AlgoliaSearchBox);
-  const CustomHits = connectHits(Hits);
+  const CustomHits = connectHits(AlgoliaHits);
+  const CustomPagination = connectPagination(AlgoliaPagination);
 
   return (
     <Row>
@@ -98,7 +156,7 @@ export default function AlgoliaSearch({ location }) {
             <Col md="9">
               <CustomSearchBox defaultRefinement={getQuery()} />
               <CustomHits />
-              <Pagination />
+              <CustomPagination />
             </Col>
           </Row>
           <PoweredBy className="justify-content-center" />
