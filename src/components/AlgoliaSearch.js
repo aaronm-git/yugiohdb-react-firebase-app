@@ -3,16 +3,15 @@ import { Link } from "react-router-dom";
 import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,
-  Hits,
   Pagination,
   ClearRefinements,
   RefinementList,
   Configure,
   PoweredBy,
   connectSearchBox,
-  connectPoweredBy,
+  connectHits,
 } from "react-instantsearch-dom";
-import { Row, Col, FormControl } from "react-bootstrap";
+import { Row, Col, FormControl, Card, CardColumns } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 
 const searchClient = algoliasearch("A5JPX9U9RD", "bffd80bc0030e6e51457ec77f6ff353c");
@@ -22,14 +21,42 @@ export default function AlgoliaSearch({ location }) {
     const query = new URLSearchParams(location.search);
     return query.get("q");
   };
-  const Hit = ({ hit }) => {
-    return (
-      <div>
-        {/* <Highlight attribute="name" hit={hit} tagName="mark" /> */}
-        <Link to={`/card/${hit.objectID}`}>{hit.name}</Link>
 
-        <p className="text-truncate">{hit.description}</p>
-      </div>
+  const Hits = ({ hits }) => {
+    return (
+      <CardColumns>
+        {hits.map((hit) => (
+          <Card key={hit.objectID} className="shadow-sm">
+            <div
+              style={{
+                height: "200px",
+                backgroundImage: `url(${hit.imageURLs.full}), url('https://storage.cloud.google.com/yugiohdb-app.appspot.com/cards/default.jpg')`,
+                backgroundRepeat: "none",
+                backgroundSize: "cover",
+              }}
+            />
+            <Card.ImgOverlay
+              className="py-1 text-white"
+              style={{ backgroundColor: "rgba(0,0,0,0.5)", height: "2rem", top: "168px" }}
+            >
+              <div>
+                {typeof hit.atk === "number" && typeof hit.def === "number" ? (
+                  <p>
+                    {hit.atk}/{hit.def}
+                  </p>
+                ) : (
+                  <p>{hit.race}</p>
+                )}
+              </div>
+            </Card.ImgOverlay>
+            <Card.Body>
+              <Card.Title>
+                <Link to={`/card/${hit.objectID}`}>{hit.name}</Link>
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        ))}
+      </CardColumns>
     );
   };
   const AlgoliaSearchBox = ({ currentRefinement, refine }) => {
@@ -51,6 +78,7 @@ export default function AlgoliaSearch({ location }) {
   };
 
   const CustomSearchBox = connectSearchBox(AlgoliaSearchBox);
+  const CustomHits = connectHits(Hits);
 
   return (
     <Row>
@@ -69,7 +97,7 @@ export default function AlgoliaSearch({ location }) {
             </Col>
             <Col md="9">
               <CustomSearchBox defaultRefinement={getQuery()} />
-              <Hits hitComponent={Hit} />
+              <CustomHits />
               <Pagination />
             </Col>
           </Row>
