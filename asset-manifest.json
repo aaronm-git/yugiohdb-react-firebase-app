@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/yugiohdb-react-firebase-app/static/css/main.03c1bd84.chunk.css",
-    "main.js": "/yugiohdb-react-firebase-app/static/js/main.4dad5902.chunk.js",
-    "main.js.map": "/yugiohdb-react-firebase-app/static/js/main.4dad5902.chunk.js.map",
+    "main.js": "/yugiohdb-react-firebase-app/static/js/main.dea397a8.chunk.js",
+    "main.js.map": "/yugiohdb-react-firebase-app/static/js/main.dea397a8.chunk.js.map",
     "runtime-main.js": "/yugiohdb-react-firebase-app/static/js/runtime-main.bd094943.js",
     "runtime-main.js.map": "/yugiohdb-react-firebase-app/static/js/runtime-main.bd094943.js.map",
     "static/css/2.de424728.chunk.css": "/yugiohdb-react-firebase-app/static/css/2.de424728.chunk.css",
     "static/js/2.29d9102b.chunk.js": "/yugiohdb-react-firebase-app/static/js/2.29d9102b.chunk.js",
     "static/js/2.29d9102b.chunk.js.map": "/yugiohdb-react-firebase-app/static/js/2.29d9102b.chunk.js.map",
     "index.html": "/yugiohdb-react-firebase-app/index.html",
-    "precache-manifest.805e3a142e156e2f3a60993b4123185f.js": "/yugiohdb-react-firebase-app/precache-manifest.805e3a142e156e2f3a60993b4123185f.js",
+    "precache-manifest.500582a8e656c4ca66ab40b0ecf5b907.js": "/yugiohdb-react-firebase-app/precache-manifest.500582a8e656c4ca66ab40b0ecf5b907.js",
     "service-worker.js": "/yugiohdb-react-firebase-app/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/yugiohdb-react-firebase-app/static/css/2.de424728.chunk.css.map",
     "static/css/main.03c1bd84.chunk.css.map": "/yugiohdb-react-firebase-app/static/css/main.03c1bd84.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.de424728.chunk.css",
     "static/js/2.29d9102b.chunk.js",
     "static/css/main.03c1bd84.chunk.css",
-    "static/js/main.4dad5902.chunk.js"
+    "static/js/main.dea397a8.chunk.js"
   ]
 }
