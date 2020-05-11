@@ -11,7 +11,7 @@ import {
   connectHits,
   connectPagination,
 } from "react-instantsearch-dom";
-import { Row, Col, FormControl, Card, CardColumns, Pagination } from "react-bootstrap";
+import { Row, Col, FormControl, Card, CardDeck, Pagination } from "react-bootstrap";
 import { Search, ChevronLeft, ChevronRight, ChevronDoubleLeft, ChevronDoubleRight } from "react-bootstrap-icons";
 
 const searchClient = algoliasearch("A5JPX9U9RD", "bffd80bc0030e6e51457ec77f6ff353c");
@@ -24,9 +24,9 @@ export default function AlgoliaSearch({ location }) {
 
   const AlgoliaHits = ({ hits }) => {
     return (
-      <CardColumns>
+      <CardDeck>
         {hits.map((hit) => (
-          <Card key={hit.objectID} className="shadow-sm">
+          <Card key={hit.objectID} className="shadow-sm mb-3" style={{ minWidth: "200px" }}>
             <div
               style={{
                 height: "200px",
@@ -56,7 +56,7 @@ export default function AlgoliaSearch({ location }) {
             </Card.Body>
           </Card>
         ))}
-      </CardColumns>
+      </CardDeck>
     );
   };
   const AlgoliaSearchBox = ({ currentRefinement, refine }) => {
@@ -76,7 +76,6 @@ export default function AlgoliaSearch({ location }) {
       </div>
     );
   };
-
   const AlgoliaPagination = ({ currentRefinement, nbPages, refine }) => {
     const left = [
         currentRefinement - 1 > 0 ? "First" : null,
@@ -195,6 +194,7 @@ export default function AlgoliaSearch({ location }) {
               <Configure hitsPerPage={8} />
             </Col>
             <Col md="9">
+              <Configure hitsPerPage={12} />
               <CustomSearchBox defaultRefinement={getQuery()} />
               <CustomHits />
               <CustomPagination />
