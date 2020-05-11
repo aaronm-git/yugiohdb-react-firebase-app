@@ -14,7 +14,7 @@ import {
 import { Row, Col, FormControl, Card, CardDeck, Pagination } from "react-bootstrap";
 import { Search, ChevronLeft, ChevronRight, ChevronDoubleLeft, ChevronDoubleRight } from "react-bootstrap-icons";
 
-const searchClient = algoliasearch("A5JPX9U9RD", "bffd80bc0030e6e51457ec77f6ff353c");
+const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_PUBLIC_KEY);
 
 export default function AlgoliaSearch({ location }) {
   const getQuery = () => {
