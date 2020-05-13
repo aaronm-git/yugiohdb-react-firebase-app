@@ -41,7 +41,6 @@ function App() {
               <Route
                 path="/search"
                 render={(props) => (
-                  // <SearchResults {...props} selectThisCard={(selectedCard) => selectThisCard(selectedCard)} />
                   <AlgoliaSearch {...props} selectThisCard={(selectedCard) => selectThisCard(selectedCard)} />
                 )}
               />
