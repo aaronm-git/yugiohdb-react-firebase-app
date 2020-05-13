@@ -21,10 +21,10 @@ function App() {
     let newRecentlyViewedList = [
       selectedCard,
       ...recentlyViewed.filter((item) => {
-        return selectedCard && item ? item.id !== selectedCard.id : false;
+        return selectedCard && item ? item.objectID !== selectedCard.objectID : false;
       }),
     ];
-    setRecentlyViewed(newRecentlyViewedList.slice(0, 5));
+    setRecentlyViewed(newRecentlyViewedList.slice(0, 6));
     localStorage.setItem("recentlyViewed", JSON.stringify(newRecentlyViewedList));
   };
   return (
