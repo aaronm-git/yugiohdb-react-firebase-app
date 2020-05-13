@@ -4,31 +4,61 @@ import { Link } from "react-router-dom";
 
 export default function Home({ recentCards, selectThisCard }) {
   const cardItem = (card) => (
-    <Card key={"recent-" + card.id}>
-      {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+    <Card
+      key={"recent-" + card.objectID}
+      style={{ minWidth: "200px" }}
+      className="mb-2 shadow-sm"
+    >
+      <div
+        style={{
+          height: "200px",
+          backgroundImage: `url(${card.imageURLs.full}), url('https://storage.cloud.google.com/yugiohdb-app.appspot.com/cards/default.jpg')`,
+          backgroundRepeat: "none",
+          backgroundSize: "cover",
+        }}
+      />
+      <Card.ImgOverlay
+        className="py-1 text-white"
+        style={{
+          backgroundColor: "rgba(0,0,0,0.5)",
+          height: "2rem",
+          top: "168px",
+        }}
+      >
+        <div>
+          {typeof card.atk === "number" && typeof card.def === "number" ? (
+            <p>
+              {card.atk}/{card.def}
+            </p>
+          ) : (
+            <p>{card.race}</p>
+          )}
+        </div>
+      </Card.ImgOverlay>
       <Card.Body>
-        <Card.Title>{card.name}</Card.Title>
-        {card.type}
-        <hr />
-        {/* <Card.Text style={{ maxHeight: "100px", overflow: "scroll" }}>{card.desc}</Card.Text> */}
-        <Link to={`/card/${card.id}`} className="btn btn-block btn-warning" onClick={() => selectThisCard(card)}>
-          View Card
-        </Link>
+        <Card.Title>
+          <Link
+            to={`/card/${card.objectID}`}
+            onClick={() => selectThisCard(card)}
+          >
+            {card.name}
+          </Link>
+        </Card.Title>
       </Card.Body>
     </Card>
   );
   return (
     <>
-      <h1>Home</h1>
-      <hr />
       <h5>Recently Viewed Cards</h5>
-      <CardDeck>
+      <CardDeck className="flex-row flex-nowrap" style={{ overflow: "scroll" }}>
         {recentCards ? (
           recentCards.map((card) => cardItem(card))
         ) : (
           <Card>
             <Card.Body>
-              <Card.Text className="text-center text-muted">No Recently Viewed Cards</Card.Text>
+              <Card.Text className="text-center text-muted">
+                No Recently Viewed Cards
+              </Card.Text>
             </Card.Body>
           </Card>
         )}

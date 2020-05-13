@@ -16,7 +16,7 @@ import { Search, ChevronLeft, ChevronRight, ChevronDoubleLeft, ChevronDoubleRigh
 
 const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_PUBLIC_KEY);
 
-export default function AlgoliaSearch({ location }) {
+export default function AlgoliaSearch({ location, selectThisCard }) {
   const getQuery = () => {
     const query = new URLSearchParams(location.search);
     return query.get("q");
@@ -51,7 +51,7 @@ export default function AlgoliaSearch({ location }) {
             </Card.ImgOverlay>
             <Card.Body>
               <Card.Title>
-                <Link to={`/card/${hit.objectID}`}>{hit.name}</Link>
+                <Link to={`/card/${hit.objectID}`} onClick={() => selectThisCard(hit)}>{hit.name}</Link>
               </Card.Title>
             </Card.Body>
           </Card>
