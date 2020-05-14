@@ -6,7 +6,7 @@ export default function Home({ recentCards, selectThisCard }) {
   const cardItem = (card) => (
     <Card
       key={"recent-" + card.objectID}
-      style={{ minWidth: "200px" }}
+      style={{ minWidth: "200px", maxWidth: "200px"}}
       className="mb-2 shadow-sm"
     >
       <div
