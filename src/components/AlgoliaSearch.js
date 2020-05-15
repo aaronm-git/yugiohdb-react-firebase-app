@@ -45,8 +45,8 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
         {hits.map((hit) => (
           <Card
             key={hit.objectID}
-            className="shadow-sm mb-3"
-            style={{ minWidth: "200px" }}
+            className="shadow-sm mb-3 mx-auto"
+            style={{ minWidth: "200px", maxWidth: "200px" }}
           >
             <div
               style={{
@@ -66,11 +66,12 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
             >
               <div>
                 {typeof hit.atk === "number" && typeof hit.def === "number" ? (
-                  <p>
-                    {hit.atk}/{hit.def}
-                  </p>
+                  <div className="d-flex justify-content-between">
+                    <span>{hit.atk}/{hit.def}</span>
+                    <span>{hit.type.lvl2.substring(hit.type.lvl2.lastIndexOf(" "))}</span>
+                  </div>
                 ) : (
-                  <p>{hit.race}</p>
+                <span>{hit.type.lvl0}/{hit.race}</span>
                 )}
               </div>
             </Card.ImgOverlay>
@@ -223,8 +224,9 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
               event.preventDefault();
               refine(item.value);
             }}
+            className="text-decoration-none"
           >
-            {item.label} <Badge variant="primary">{item.count}</Badge>
+            {item.label} <Badge variant="warning">{item.count}</Badge>
           </a>
           {item.items && (
             <HierarchicalMenu
