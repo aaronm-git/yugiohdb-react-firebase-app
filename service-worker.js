@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/yugiohdb-react-firebase-app/precache-manifest.132761a268af71e0318b50a442d01f1b.js"
+  "/yugiohdb-react-firebase-app/precache-manifest.cbb3f2ef8952da7a7b5a76538f588d9a.js"
 );
 
 self.addEventListener('message', (event) => {
