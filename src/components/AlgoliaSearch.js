@@ -4,17 +4,34 @@ import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,
   ClearRefinements,
-  RefinementList,
+  connectHierarchicalMenu,
   Configure,
   PoweredBy,
   connectSearchBox,
   connectHits,
   connectPagination,
 } from "react-instantsearch-dom";
-import { Row, Col, FormControl, Card, CardDeck, Pagination } from "react-bootstrap";
-import { Search, ChevronLeft, ChevronRight, ChevronDoubleLeft, ChevronDoubleRight } from "react-bootstrap-icons";
+import {
+  Row,
+  Col,
+  FormControl,
+  Card,
+  CardDeck,
+  Pagination,
+  Badge
+} from "react-bootstrap";
+import {
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDoubleLeft,
+  ChevronDoubleRight,
+} from "react-bootstrap-icons";
 
-const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_PUBLIC_KEY);
+const searchClient = algoliasearch(
+  process.env.REACT_APP_ALGOLIA_APP_ID,
+  process.env.REACT_APP_ALGOLIA_PUBLIC_KEY
+);
 
 export default function AlgoliaSearch({ location, selectThisCard }) {
   const getQuery = () => {
@@ -26,7 +43,11 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
     return (
       <CardDeck>
         {hits.map((hit) => (
-          <Card key={hit.objectID} className="shadow-sm mb-3" style={{ minWidth: "200px" }}>
+          <Card
+            key={hit.objectID}
+            className="shadow-sm mb-3"
+            style={{ minWidth: "200px" }}
+          >
             <div
               style={{
                 height: "200px",
@@ -37,7 +58,11 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
             />
             <Card.ImgOverlay
               className="py-1 text-white"
-              style={{ backgroundColor: "rgba(0,0,0,0.5)", height: "2rem", top: "168px" }}
+              style={{
+                backgroundColor: "rgba(0,0,0,0.5)",
+                height: "2rem",
+                top: "168px",
+              }}
             >
               <div>
                 {typeof hit.atk === "number" && typeof hit.def === "number" ? (
@@ -51,7 +76,12 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
             </Card.ImgOverlay>
             <Card.Body>
               <Card.Title>
-                <Link to={`/card/${hit.objectID}`} onClick={() => selectThisCard(hit)}>{hit.name}</Link>
+                <Link
+                  to={`/card/${hit.objectID}`}
+                  onClick={() => selectThisCard(hit)}
+                >
+                  {hit.name}
+                </Link>
               </Card.Title>
             </Card.Body>
           </Card>
@@ -62,7 +92,10 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
   const AlgoliaSearchBox = ({ currentRefinement, refine }) => {
     return (
       <div className="position-relative mb-4">
-        <Search className="position-absolute text-secondary" style={{ left: "0", margin: "1rem" }} />
+        <Search
+          className="position-absolute text-secondary"
+          style={{ left: "0", margin: "1rem" }}
+        />
         <FormControl
           id="algolia-searchBox"
           aria-label="Large"
@@ -108,7 +141,10 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
           ) : (
             ""
           )}
-          <Pagination.Item key={`algoliaPage-${currentRefinement}-mobile`} active>
+          <Pagination.Item
+            key={`algoliaPage-${currentRefinement}-mobile`}
+            active
+          >
             {currentRefinement}
           </Pagination.Item>
           {currentRefinement + 1 < nbPages ? (
@@ -128,7 +164,10 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
     };
     return (
       <>
-        <Pagination size="lg" className="justify-content-center d-none d-lg-flex">
+        <Pagination
+          size="lg"
+          className="justify-content-center d-none d-lg-flex"
+        >
           {range.map((page) => {
             let jumpTo;
             let name;
@@ -173,10 +212,37 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
       </>
     );
   };
-
+  const HierarchicalMenu = ({ items, refine, createURL }) => (
+    <ul>
+      {items.map(item => (
+        <li key={item.label}>
+          <a
+            href={createURL(item.value)}
+            style={{ fontWeight: item.isRefined ? 'bold' : '' }}
+            onClick={event => {
+              event.preventDefault();
+              refine(item.value);
+            }}
+          >
+            {item.label} <Badge variant="primary">{item.count}</Badge>
+          </a>
+          {item.items && (
+            <HierarchicalMenu
+              items={item.items}
+              refine={refine}
+              createURL={createURL}
+            />
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+  
+  
   const CustomSearchBox = connectSearchBox(AlgoliaSearchBox);
   const CustomHits = connectHits(AlgoliaHits);
   const CustomPagination = connectPagination(AlgoliaPagination);
+  const CustomHierarchicalMenu = connectHierarchicalMenu(HierarchicalMenu);
 
   return (
     <Row>
@@ -186,12 +252,13 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
             <Col md="3">
               <ClearRefinements />
               <h5> Card Types</h5>
-              <RefinementList attribute="_tags" showMore={true} />
-              <h5>Race</h5>
-              <RefinementList attribute="race" showMore={true} />
-              <h5>Archetype</h5>
-              <RefinementList attribute="archetype" showMore={true} />
-              <Configure hitsPerPage={8} />
+              <CustomHierarchicalMenu
+                attributes={[
+                  'type.lvl0',
+                  'type.lvl1',
+                  'type.lvl2',
+                ]}
+               />
             </Col>
             <Col md="9">
               <Configure hitsPerPage={12} />
