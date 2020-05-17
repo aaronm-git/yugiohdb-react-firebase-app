@@ -7,7 +7,7 @@ export default function Home({ recentCards, selectThisCard }) {
     <Card
       key={"recent-" + card.objectID}
       style={{ minWidth: "200px", maxWidth: "200px"}}
-      className="mb-2 shadow-sm"
+      className="mb-2 shadow-sm mx-auto"
     >
       <div
         style={{
@@ -56,7 +56,7 @@ export default function Home({ recentCards, selectThisCard }) {
         ) : (
           <Card>
             <Card.Body>
-              <Card.Text className="text-center text-muted">
+              <Card.Text className="text-center text-mute">
                 No Recently Viewed Cards
               </Card.Text>
             </Card.Body>
