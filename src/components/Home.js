@@ -6,8 +6,8 @@ export default function Home({ recentCards, selectThisCard }) {
   const cardItem = (card) => (
     <Card
       key={"recent-" + card.objectID}
-      style={{ minWidth: "200px", maxWidth: "200px"}}
-      className="mb-2 shadow-sm mx-auto"
+      className="mb-2 shadow-sm ml-2"
+      style={{minWidth: "200px"}}
     >
       <div
         style={{
@@ -50,13 +50,13 @@ export default function Home({ recentCards, selectThisCard }) {
   return (
     <>
       <h5>Recently Viewed Cards</h5>
-      <CardDeck className="flex-row flex-nowrap" style={{ overflow: "scroll" }}>
+      <CardDeck className="row flex-nowrap" style={{ overflow: "scroll" }}>
         {recentCards ? (
           recentCards.map((card) => cardItem(card))
         ) : (
           <Card>
             <Card.Body>
-              <Card.Text className="text-center text-mute">
+              <Card.Text className="text-center text-muted">
                 No Recently Viewed Cards
               </Card.Text>
             </Card.Body>
