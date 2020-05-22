@@ -68,7 +68,7 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
                 {hit.atk || hit.def ? (
                   <div className="d-flex justify-content-between">
                     <span>{hit.atk}/{hit.def}</span>
-                    <span>{hit.type.lvl2.substring(hit.type.lvl2.lastIndexOf(" "))}</span>
+                    <span>{hit.type.lvl2? hit.type.lvl2.substring(hit.type.lvl2.lastIndexOf(" ")): hit.type.lvl0 }</span>
                   </div>
                 ) : (
                 <span>{hit.type.lvl0}/{hit.race}</span>
