@@ -167,7 +167,7 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
       <>
         <Pagination
           size="lg"
-          className="justify-content-center d-none d-lg-flex"
+          className="justify-content-end d-none d-lg-flex"
         >
           {range.map((page) => {
             let jumpTo;
