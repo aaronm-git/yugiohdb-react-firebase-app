@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cff5fd4f24f8ff46a13d73122d9c9d0d",
+    "revision": "0d4bbc49c77f334864f9597635c4e702",
     "url": "/yugiohdb-react-firebase-app/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yugiohdb-react-firebase-app/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "76617313678752a973df",
+    "revision": "ca7af40349fccd92dabc",
     "url": "/yugiohdb-react-firebase-app/static/css/main.03c1bd84.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yugiohdb-react-firebase-app/static/js/2.522e43f2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "76617313678752a973df",
-    "url": "/yugiohdb-react-firebase-app/static/js/main.5a65f82d.chunk.js"
+    "revision": "ca7af40349fccd92dabc",
+    "url": "/yugiohdb-react-firebase-app/static/js/main.c473dd67.chunk.js"
   },
   {
     "revision": "30dc4fece411607aa1a2",
