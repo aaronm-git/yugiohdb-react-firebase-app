@@ -10,6 +10,8 @@ import {
   connectSearchBox,
   connectHits,
   connectPagination,
+  connectRefinementList,
+  connectCurrentRefinements,
 } from "react-instantsearch-dom";
 import {
   Row,
@@ -18,7 +20,9 @@ import {
   Card,
   CardDeck,
   Pagination,
-  Badge
+  Badge,
+  Form,
+  Button,
 } from "react-bootstrap";
 import {
   Search,
@@ -26,6 +30,7 @@ import {
   ChevronRight,
   ChevronDoubleLeft,
   ChevronDoubleRight,
+  Filter
 } from "react-bootstrap-icons";
 
 const searchClient = algoliasearch(
@@ -34,11 +39,11 @@ const searchClient = algoliasearch(
 );
 
 export default function AlgoliaSearch({ location, selectThisCard }) {
+  const [rankRangeValue, setRankRangeValue] = React.useState(0);
   const getQuery = () => {
     const query = new URLSearchParams(location.search);
     return query.get("q");
   };
-
   const AlgoliaHits = ({ hits }) => {
     return (
       <CardDeck>
@@ -67,11 +72,21 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
               <div>
                 {hit.atk || hit.def ? (
                   <div className="d-flex justify-content-between">
-                    <span>{hit.atk}/{hit.def}</span>
-                    <span>{hit.type.lvl2? hit.type.lvl2.substring(hit.type.lvl2.lastIndexOf(" ")): hit.type.lvl0 }</span>
+                    <span>
+                      {hit.atk}/{hit.def}
+                    </span>
+                    <span>
+                      {hit.type.lvl2
+                        ? hit.type.lvl2.substring(
+                            hit.type.lvl2.lastIndexOf(" ")
+                          )
+                        : hit.type.lvl0}
+                    </span>
                   </div>
                 ) : (
-                <span>{hit.type.lvl0}/{hit.race}</span>
+                  <span>
+                    {hit.type.lvl0}/{hit.race}
+                  </span>
                 )}
               </div>
             </Card.ImgOverlay>
@@ -165,10 +180,7 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
     };
     return (
       <>
-        <Pagination
-          size="lg"
-          className="justify-content-end d-none d-lg-flex"
-        >
+        <Pagination size="lg" className="justify-content-end d-none d-lg-flex">
           {range.map((page) => {
             let jumpTo;
             let name;
@@ -215,12 +227,12 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
   };
   const HierarchicalMenu = ({ items, refine, createURL }) => (
     <ul>
-      {items.map(item => (
+      {items.map((item) => (
         <li key={item.label}>
           <a
             href={createURL(item.value)}
-            style={{ fontWeight: item.isRefined ? 'bold' : '' }}
-            onClick={event => {
+            style={{ fontWeight: item.isRefined ? "bold" : "" }}
+            onClick={(event) => {
               event.preventDefault();
               refine(item.value);
             }}
@@ -239,28 +251,118 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
       ))}
     </ul>
   );
-  
-  
+  const RefinementList = ({
+    items, //object[]
+    currentRefinement, //string[]
+    refine, //function
+    isFromSearch, //boolean
+    searchForItems, //function
+    createURL, //function
+    label, //string
+    isRange,
+    rangeValue,
+    rangeUpdate,
+  }) => {
+    const Range = (
+      <div className="d-flex justify-content-between flex-nowrap">
+        <Form.Control
+          type="range"
+          custom
+          min="0"
+          max="10"
+          step="1"
+          value={rankRangeValue}
+          onChange={(e) => rangeUpdate(e.target.value)}
+        />
+        <span>{rangeValue}</span>
+      </div>
+    );
+    const CheckBox = (
+      <>
+        {items.map((item) => (
+          <Form.Check
+            type="checkbox"
+            id={`default-${item.label}`}
+            key={`checkbox-${item.label}`}
+            label={
+              <>
+                {item.label.substring(item.label.lastIndexOf(">") + 1)}
+                &nbsp;&nbsp;
+                <Badge variant="warning">{item.count}</Badge>
+              </>
+            }
+            style={{ fontWeight: item.isRefined ? "bold" : "" }}
+            onClick={(event) => {
+              // event.preventDefault();
+              refine(item.value);
+            }}
+          />
+        ))}
+      </>
+    );
+
+    return (
+      <Card className="my-2 shadow-sm">
+        <Card.Body>
+          <Card.Text><Filter/> {label || ""}</Card.Text>
+          <hr/>
+          {isRange ? Range : CheckBox}
+        </Card.Body>
+      </Card>
+    );
+  };
+
+  const ClearRefinements = ({ items, refine }) => {
+    const clearRefinements = () => {
+      const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+      checkboxes.forEach(checkbox => checkbox.checked = false);
+      refine(items);
+    };
+
+    return (
+      <Button
+        variant="secondary"
+        onClick={() => clearRefinements()}
+        disabled={!items.length}
+      >
+        Clear All
+      </Button>
+    );
+  };
+
   const CustomSearchBox = connectSearchBox(AlgoliaSearchBox);
   const CustomHits = connectHits(AlgoliaHits);
   const CustomPagination = connectPagination(AlgoliaPagination);
-  const CustomHierarchicalMenu = connectHierarchicalMenu(HierarchicalMenu);
+  // const CustomHierarchicalMenu = connectHierarchicalMenu(HierarchicalMenu);
+  const CustomRefinementList = connectRefinementList(RefinementList);
+  const CustomClearRefinements = connectCurrentRefinements(ClearRefinements);
 
   return (
     <Row>
       <Col>
         <InstantSearch indexName="cards" searchClient={searchClient}>
           <Row>
-            <Col md="3">
-              <ClearRefinements />
-              <h5> Card Types</h5>
-              <CustomHierarchicalMenu
+            <Col md="3" className="pt-5">
+              <CustomClearRefinements />
+              {/* <CustomHierarchicalMenu
                 attributes={[
                   'type.lvl0',
                   'type.lvl1',
                   'type.lvl2',
                 ]}
-               />
+               /> */}
+              <CustomRefinementList attribute="type.lvl1" label="Deck" />
+              <CustomRefinementList attribute="type.lvl0" label="Card Type" />
+              <CustomRefinementList attribute="type.lvl2" label="Ability" />
+              <CustomRefinementList attribute="race" label="Race" />
+              <CustomRefinementList attribute="archetype" label="Archetype" />
+              {/* <CustomRefinementList
+                attribute="level"
+                label="Rank"
+                isRange
+                rangeValue={rankRangeValue}
+                rangeUpdate={setRankRangeValue}
+              /> */}
             </Col>
             <Col md="9">
               <Configure hitsPerPage={12} />
