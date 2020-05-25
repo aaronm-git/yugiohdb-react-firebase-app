@@ -7,7 +7,7 @@ export default function Home({ recentCards, selectThisCard }) {
     <Card
       key={"recent-" + card.objectID}
       className="mb-2 shadow-sm ml-2"
-      style={{minWidth: "200px"}}
+      style={{minWidth: "200px", maxWidth:"200px"}}
     >
       <div
         style={{
