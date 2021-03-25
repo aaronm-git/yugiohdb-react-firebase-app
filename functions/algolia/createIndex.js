@@ -1,10 +1,8 @@
-const fs = require("fs");
-
-const cardsDump = require("../../dump/allcards.json").data;
+const cardsDump = require("../other/allcards.json").data;
 const algoliaCard = require("./card");
 
 const algoliasearch = require("algoliasearch");
-const algoliaAdminKey = process.env.ALGOLIA_ADMIN_KEY;
+const algoliaAdminKey = "";
 const algoliaAppId = "A5JPX9U9RD";
 const algoliaIndexName = "cards";
 
