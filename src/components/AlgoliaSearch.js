@@ -32,7 +32,8 @@ import {
   ChevronDoubleRight,
   Filter
 } from "react-bootstrap-icons";
-
+import AlgoliaHit from "./AlgoliaHit"
+  ;
 const searchClient = algoliasearch(
   process.env.REACT_APP_ALGOLIA_APP_ID,
   process.env.REACT_APP_ALGOLIA_PUBLIC_KEY
@@ -47,61 +48,11 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
   const AlgoliaHits = ({ hits }) => {
     return (
       <CardDeck>
-        {hits.map((hit) => (
-          <Card
-            key={hit.objectID}
-            className="shadow-sm mb-3 mx-auto"
-            style={{ minWidth: "200px", maxWidth: "200px" }}
-          >
-            <div
-              style={{
-                height: "200px",
-                backgroundImage: `url(${hit.imageURLs.full}), url('https://storage.cloud.google.com/yugiohdb-app.appspot.com/cards/default.jpg')`,
-                backgroundRepeat: "none",
-                backgroundSize: "cover",
-              }}
-            />
-            <Card.ImgOverlay
-              className="py-1 text-white"
-              style={{
-                backgroundColor: "rgba(0,0,0,0.5)",
-                height: "2rem",
-                top: "168px",
-              }}
-            >
-              <div>
-                {hit.atk || hit.def ? (
-                  <div className="d-flex justify-content-between">
-                    <span>
-                      {hit.atk}/{hit.def}
-                    </span>
-                    <span>
-                      {hit.type.lvl2
-                        ? hit.type.lvl2.substring(
-                            hit.type.lvl2.lastIndexOf(" ")
-                          )
-                        : hit.type.lvl0}
-                    </span>
-                  </div>
-                ) : (
-                  <span>
-                    {hit.type.lvl0}/{hit.race}
-                  </span>
-                )}
-              </div>
-            </Card.ImgOverlay>
-            <Card.Body>
-              <Card.Title>
-                <Link
-                  to={`/card/${hit.objectID}`}
-                  onClick={() => selectThisCard(hit)}
-                >
-                  {hit.name}
-                </Link>
-              </Card.Title>
-            </Card.Body>
-          </Card>
-        ))}
+        <Row noGutters className="w-100">
+          {hits.map((hit) => (
+            <AlgoliaHit hit={hit} selectThisCard={selectThisCard} key={hit.objectID} />
+          ))}
+        </Row>
       </CardDeck>
     );
   };
@@ -127,12 +78,12 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
   };
   const AlgoliaPagination = ({ currentRefinement, nbPages, refine }) => {
     const left = [
-        currentRefinement - 1 > 0 ? "First" : null,
-        currentRefinement - 1 > 0 ? "Prev" : null,
-        currentRefinement - 3 > 0 ? "..." : null,
-        currentRefinement - 2 > 0 ? currentRefinement - 2 : null,
-        currentRefinement - 1 > 0 ? currentRefinement - 1 : null,
-      ],
+      currentRefinement - 1 > 0 ? "First" : null,
+      currentRefinement - 1 > 0 ? "Prev" : null,
+      currentRefinement - 3 > 0 ? "..." : null,
+      currentRefinement - 2 > 0 ? currentRefinement - 2 : null,
+      currentRefinement - 1 > 0 ? currentRefinement - 1 : null,
+    ],
       right = [
         currentRefinement + 1 <= nbPages ? currentRefinement + 1 : null,
         currentRefinement + 2 <= nbPages ? currentRefinement + 2 : null,
@@ -304,8 +255,8 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
     return (
       <Card className="my-2 shadow-sm">
         <Card.Body>
-          <Card.Text><Filter/> {label || ""}</Card.Text>
-          <hr/>
+          <Card.Text><Filter /> {label || ""}</Card.Text>
+          <hr />
           {isRange ? Range : CheckBox}
         </Card.Body>
       </Card>
@@ -342,7 +293,7 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
       <Col>
         <InstantSearch indexName="cards" searchClient={searchClient}>
           <Row>
-            <Col md="3" className="pt-5">
+            <Col md="2" className="pt-5">
               <CustomClearRefinements />
               {/* <CustomHierarchicalMenu
                 attributes={[
@@ -364,7 +315,7 @@ export default function AlgoliaSearch({ location, selectThisCard }) {
                 rangeUpdate={setRankRangeValue}
               /> */}
             </Col>
-            <Col md="9">
+            <Col>
               <Configure hitsPerPage={12} />
               <CustomSearchBox defaultRefinement={getQuery()} />
               <CustomHits />

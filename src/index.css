@@ -4,7 +4,8 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("./bg.png");
+  /* background-image: url("./bg.png"); */
+  background-image: url("https://images.unsplash.com/photo-1568503445916-aad26dad82ea?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2742&q=80");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top;

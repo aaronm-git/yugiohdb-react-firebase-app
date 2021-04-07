@@ -29,7 +29,7 @@ function App() {
   };
   return (
     <Router>
-      <Container className="mb-3" style={{ minHeight: "calc(100vh - 83px)" }}>
+      <Container fluid className="mb-3" style={{ minHeight: "calc(100vh - 83px)" }}>
         <Row>
           <Col className="py-3">
             <SiteNavBar />

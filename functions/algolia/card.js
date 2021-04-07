@@ -6,6 +6,7 @@ class algoliaCard {
     this.atk = card.atk;
     this.def = card.def;
     this.race = card.race;
+    this.attribute = card.attribute;
     this.archetype = card.archetype;
     this.level = card.level;
     this.type = {}
